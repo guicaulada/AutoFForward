@@ -86,7 +86,6 @@ end
 
 -- Load server-side hooks
 function AutoFForward:loadMap()
-    -- AutoFForward.loadDisplay() -- Client
     if g_server ~= nil then
         -- Server (SP,MP,dedicated)
         -- Load settings if found

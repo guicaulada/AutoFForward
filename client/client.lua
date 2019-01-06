@@ -55,16 +55,6 @@ end
 
 -- Client-side only functions
 
--- Load client-side hooks
-function AutoFForward.loadDisplay()
-    if g_client ~= nil then
-        -- Client (MP)
-        -- We can't send any events right now (will give error with invalid event id)
-        -- so we send the request event after onStartMission()
-        g_currentMission.onStartMission = Utils.appendedFunction(g_currentMission.onStartMission, AutoFForward.getDisplayState)
-    end
-end
-
 ---@param unicode
 ---@param sym
 ---@param modifier
