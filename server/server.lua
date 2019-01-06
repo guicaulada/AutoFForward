@@ -114,6 +114,7 @@ function AutoFForward.updateUsers()
     end
     AutoFForward.users = users
     AutoFForward.broadcastUserList()
+    AutoFForward.updateTimeScale()
 end
 
 -- Update time scale according to users states
