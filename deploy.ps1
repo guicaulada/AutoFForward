@@ -1,6 +1,7 @@
 $ZIPNAME="AutoFForward.zip"
 $MOD_DIR="S:\Documents\My Games\FarmingSimulator2019\mods"
-$EXE_PATH ="S:\Steam\steamapps\common\Farming Simulator 19\FarmingSimulator2019.exe"
+$EXE_PATH="S:\Steam\steamapps\common\Farming Simulator 19\FarmingSimulator2019.exe"
+$SRV_PATH="S:\Farming Simulator 2019\FarmingSimulator2019.exe"
 
 $fs19 = Get-Process FarmingSimulator2019Game -ErrorAction SilentlyContinue
 if ($fs19) {
@@ -18,5 +19,6 @@ rm $ZIPNAME
 
 if ($fs19) {
     echo "Start Farming Simulator 19"
+    Start-Process $SRV_PATH -ArgumentList '-server'
     Start-Process $EXE_PATH
 }
