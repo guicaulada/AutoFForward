@@ -38,14 +38,14 @@ end
 ---@param streamId number
 ---@param connection Connection
 function AFF_SetSlowSpeedEvent:readStream(streamId, connection)
-    self.slowSpeed = streamReadInt(streamId)
+    self.slowSpeed = streamReadInt32(streamId)
     self:run(connection)
 end
 
 ---@param streamId number
 ---@param connection Connection
 function AFF_SetSlowSpeedEvent:writeStream(streamId, connection)
-    streamWriteInt(streamId, self.slowSpeed)
+    streamWriteInt32(streamId, self.slowSpeed)
 end
 
 ---@param connection Connection

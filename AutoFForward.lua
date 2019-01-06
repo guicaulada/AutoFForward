@@ -22,6 +22,9 @@ AutoFForward = {
     users = {}
 }
 
+-- Libraries
+source(g_currentModDirectory .. 'lib/json.lua')
+
 -- Client events
 source(g_currentModDirectory .. 'client/events/AFF_SetDisplayStateEvent.lua')
 source(g_currentModDirectory .. 'client/events/AFF_SetEnabledStateEvent.lua')

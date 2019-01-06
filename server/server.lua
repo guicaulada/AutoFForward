@@ -21,7 +21,7 @@ AutoFForward.broadcastEnabledState = function()
 end
 
 AutoFForward.broadcastUserList = function()
-    local event = AFF_SetUserListEvent:new(AutoFForward.users)
+    local event = AFF_SetUserListEvent:new(json.stringify(AutoFForward.users))
     g_server:broadcastEvent(event, true)
 end
 
@@ -36,7 +36,7 @@ AutoFForward.broadcastSlowSpeed = function()
 end
 
 AutoFForward.broadcastDisplayState = function()
-    local event = AFF_SetDisplayStateEvent:new(AutoFForward.enabled, AutoFForward.fastSpeed, AutoFForward.slowSpeed, AutoFForward.users)
+    local event = AFF_SetDisplayStateEvent:new(AutoFForward.enabled, AutoFForward.fastSpeed, AutoFForward.slowSpeed, json.stringify(AutoFForward.users))
     g_server:broadcastEvent(event)
 end
 
@@ -58,7 +58,7 @@ end
 
 ---@param connection Connection
 AutoFForward.setUserList = function(connection)
-    local event = AFF_SetUserListEvent:new(AutoFForward.users)
+    local event = AFF_SetUserListEvent:new(json.stringify(AutoFForward.users))
     connection:sendEvent(event)
 end
 
@@ -76,7 +76,7 @@ end
 
 ---@param connection Connection
 AutoFForward.setDisplayState = function(connection)
-    local event = AFF_SetDisplayStateEvent:new(AutoFForward.enabled, AutoFForward.fastSpeed, AutoFForward.slowSpeed, AutoFForward.users)
+    local event = AFF_SetDisplayStateEvent:new(AutoFForward.enabled, AutoFForward.fastSpeed, AutoFForward.slowSpeed, json.stringify(AutoFForward.users))
     connection:sendEvent(event)
 end
 
@@ -86,6 +86,7 @@ end
 
 -- Load server-side hooks
 function AutoFForward:loadMap()
+    AutoFForward.loadDisplay() -- Client
     if g_server ~= nil then
         -- Server (SP,MP,dedicated)
         -- Load settings if found
@@ -101,15 +102,15 @@ end
 -- Update user list with online users
 function AutoFForward.updateUsers()
     local users = {}
-    local users = g_currentMission.userManager:getUsers()
-    print(#users)
-    for _,user in pairs(users) do
+    local serverUsers = g_currentMission.userManager:getUsers()
+    for _,user in pairs(serverUsers) do
         local nickname = user:getNickname()
-        if AutoFForward.users[nickname] == nil then
-            AutoFForward.users[nickname] = false
-            AutoFForward.setDisplayState(user:getConnection())
+        if nickname ~= 'Server' then
+            if AutoFForward.users[nickname] == nil then
+                AutoFForward.users[nickname] = false
+            end
+            users[nickname] = AutoFForward.users[nickname]
         end
-        users[nickname] = AutoFForward.users[nickname]
     end
     AutoFForward.users = users
     AutoFForward.broadcastUserList()

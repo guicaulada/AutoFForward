@@ -28,7 +28,7 @@ function AFF_SetUserListEvent:emptyNew()
     return Event:new(AFF_SetUserListEvent_mt)
 end
 
----@param users boolean
+---@param users string
 function AFF_SetUserListEvent:new(users)
     local self = AFF_SetUserListEvent:emptyNew()
     self.users = users
@@ -38,20 +38,20 @@ end
 ---@param streamId number
 ---@param connection Connection
 function AFF_SetUserListEvent:readStream(streamId, connection)
-    self.users = streamReadTable(streamId)
+    self.users = streamReadString(streamId)
     self:run(connection)
 end
 
 ---@param streamId number
 ---@param connection Connection
 function AFF_SetUserListEvent:writeStream(streamId, connection)
-    streamWriteTable(streamId, self.users)
+    streamWriteString(streamId, self.users)
 end
 
 ---@param connection Connection
 function AFF_SetUserListEvent:run(connection)
     -- Only process event on client-side
     if connection:getIsServer() then
-        AutoFForward.users = self.users
+        AutoFForward.users = json.parse(self.users)
     end
 end

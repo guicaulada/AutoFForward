@@ -31,6 +31,7 @@ end
 ---@param enabled boolean
 ---@param fastSpeed boolean
 ---@param slowSpeed boolean
+---@param users string
 function AFF_SetDisplayStateEvent:new(enabled, fastSpeed, slowSpeed, users)
     local self = AFF_SetDisplayStateEvent:emptyNew()
     self.enabled = enabled
@@ -44,9 +45,9 @@ end
 ---@param connection Connection
 function AFF_SetDisplayStateEvent:readStream(streamId, connection)
     self.enabled = streamReadBool(streamId)
-    self.fastSpeed = streamReadInt(streamId)
-    self.slowSpeed = streamReadInt(streamId)
-    self.users = streamReadTable(streamId)
+    self.fastSpeed = streamReadInt32(streamId)
+    self.slowSpeed = streamReadInt32(streamId)
+    self.users = streamReadString(streamId)
     self:run(connection)
 end
 
@@ -54,9 +55,9 @@ end
 ---@param connection Connection
 function AFF_SetDisplayStateEvent:writeStream(streamId, connection)
     streamWriteBool(streamId, self.enabled)
-    streamWriteInt(streamId, self.fastSpeed)
-    streamWriteInt(streamId, self.slowSpeed)
-    streamWriteTable(streamId, self.users)
+    streamWriteInt32(streamId, self.fastSpeed)
+    streamWriteInt32(streamId, self.slowSpeed)
+    streamWriteString(streamId, self.users)
 end
 
 ---@param connection Connection
@@ -66,6 +67,6 @@ function AFF_SetDisplayStateEvent:run(connection)
         AutoFForward.enabled = self.enabled
         AutoFForward.fastSpeed = self.fastSpeed
         AutoFForward.slowSpeed = self.slowSpeed
-        AutoFForward.users = self.users
+        AutoFForward.users = json.parse(self.users)
     end
 end

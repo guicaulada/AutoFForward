@@ -31,3 +31,4 @@ GNU General Public License for more details.
 *Thanks to the following people who in some way or another, has helped with this project:*
 * [scfmod](https://github.com/scfmod)
 * [VertexDezign](https://github.com/VertexDezign)
+* [tylerneylon](https://github.com/tylerneylon)

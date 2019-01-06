@@ -27,33 +27,19 @@ AutoFForward.getDisplayState = function()
     g_client:getServerConnection():sendEvent(AFF_GetDisplayStateEvent:new())
 end
 
-AutoFForward.toggleUserState = function()
-    g_client:getServerConnection():sendEvent(AFF_ToggleUserStateEvent:new())
-end
-
-AutoFForward.toggleEnabledState = function()
-    g_client:getServerConnection():sendEvent(AFF_ToggleEnabledStateEvent:new())
-end
-
-AutoFForward.decreaseFastSpeed = function()
-    g_client:getServerConnection():sendEvent(AFF_DecreaseFastSpeedEvent:new())
-end
-
-AutoFForward.decreaseSlowSpeed = function()
-    g_client:getServerConnection():sendEvent(AFF_DecreaseSlowSpeedEvent:new())
-end
-
-AutoFForward.increaseFastSpeed = function()
-    g_client:getServerConnection():sendEvent(AFF_IncreaseFastSpeedEvent:new())
-end
-
-AutoFForward.increaseSlowSpeed = function()
-    g_client:getServerConnection():sendEvent(AFF_IncreaseSlowSpeedEvent:new())
-end
-
 ----------------------------------------------------------------
 
 -- Client-side only functions
+
+-- Load client-side hooks
+function AutoFForward.loadDisplay()
+    if g_client ~= nil then
+        -- Client (MP)
+        -- We can't send any events right now (will give error with invalid event id)
+        -- so we send the request event after onStartMission()
+        g_currentMission.onStartMission = Utils.appendedFunction(g_currentMission.onStartMission, AutoFForward.getDisplayState)
+    end
+end
 
 ---@param unicode
 ---@param sym
@@ -74,17 +60,17 @@ function AutoFForward:keyEvent(unicode, sym, modifier, isDown)
     end
 
     if sym == Input.KEY_slash and not modAlt then
-        self.toggleUserState()
+        g_client:getServerConnection():sendEvent(AFF_ToggleUserStateEvent:new())
     elseif sym == Input.KEY_slash and modAlt then
-        self.toggleEnabledState()
+        g_client:getServerConnection():sendEvent(AFF_ToggleEnabledStateEvent:new())
     elseif sym == Input.KEY_period and modShift then
-        self.increaseFastSpeed()
+        g_client:getServerConnection():sendEvent(AFF_IncreaseFastSpeedEvent:new())
     elseif sym == Input.KEY_period and modCtrl then
-        self.increaseSlowSpeed()
+        g_client:getServerConnection():sendEvent(AFF_IncreaseSlowSpeedEvent:new())
     elseif sym == Input.KEY_comma and modShift then
-        self.decreaseFastSpeed()
+        g_client:getServerConnection():sendEvent(AFF_DecreaseFastSpeedEvent:new())
     elseif sym == Input.KEY_comma and modCtrl then
-        self.decreaseSlowSpeed()
+        g_client:getServerConnection():sendEvent(AFF_DecreaseSlowSpeedEvent:new())
     end
 end
 
