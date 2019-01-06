@@ -10,7 +10,7 @@ if ($fs19) {
 }
 
 echo "Create new zip"
-7z a "-x!*.ps1" "-x!.git" "-x!LICENSE" "-x!*.zip" "-x!*.md" $ZIPNAME * | out-null
+7z a "-x!*.ps1" "-x!.git" "-x!LICENSE" "-x!*.zip" "-x!*.md" "-x!*.gitignore" $ZIPNAME * | out-null
 
 echo "Move to mods directory"
 cp $ZIPNAME "$MOD_DIR"
