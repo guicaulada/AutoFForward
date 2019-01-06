@@ -95,7 +95,7 @@ function AutoFForward:loadMap()
         SavegameController.onSaveComplete = Utils.appendedFunction(SavegameController.onSaveComplete, AutoFForward.saveState)
         -- Handles when users join or leave
         Farm.onUserJoinGame = Utils.appendedFunction(Farm.onUserJoinGame, AutoFForward.updateUsers)
-        Farm.onUserQuitGame = Utils.appendedFunction(Farm.onUserQuitGame, AutoFForward.updateUsers)
+        Farm.onUserQuitGame = Utils.appendedFunction(AutoFForward.updateUser, Farm.onUserQuitGame)
     end
 end
 

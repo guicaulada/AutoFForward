@@ -82,10 +82,11 @@ function renderTextWithShadow(x, y, text, textColor, shadowColor, align)
         setTextAlignment(RenderText.ALIGN_LEFT)
     end
 
+    local scale = g_gameSettings.uiScale
     setTextColor(unpack(shadowColor or defaultTextShadowColor))
-    renderText(x + defaultLineHeight * 0.025, y - defaultLineHeight * 0.025, defaultFontSize, text)
+    renderText((x * scale) + (defaultLineHeight * 0.025) + ((1-scale)/100), (y * scale) - (defaultLineHeight * 0.025) + ((1-scale)/100), defaultFontSize * scale, text)
     setTextColor(unpack(textColor or defaultTextColor))
-    renderText(x, y, defaultFontSize, text)
+    renderText((x * scale) + ((1-scale)/100), (y * scale) + ((1-scale)/100), defaultFontSize * scale, text)
 end
 
 function YesOrNo(v)
