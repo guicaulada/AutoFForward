@@ -94,8 +94,10 @@ function AutoFForward:loadMap()
         -- Append to onSaveComplete to save our own XML settings
         SavegameController.onSaveComplete = Utils.appendedFunction(SavegameController.onSaveComplete, AutoFForward.saveState)
         -- Handles when users join or leave
-        Farm.onUserJoinGame = Utils.appendedFunction(Farm.onUserJoinGame, AutoFForward.updateUsers)
-        Farm.onUserQuitGame = Utils.appendedFunction(AutoFForward.updateUser, Farm.onUserQuitGame)
+        UserManager.addUser = Utils.appendedFunction(UserManager.addUser, AutoFForward.updateUsers)
+        UserManager.removeUser = Utils.appendedFunction(UserManager.removeUser, AutoFForward.updateUsers)
+        UserManager.removeUserByConnection = Utils.appendedFunction(UserManager.removeUserByConnection, AutoFForward.updateUsers)
+        UserManager.removeUserById = Utils.appendedFunction(UserManager.removeUserById, AutoFForward.updateUsers)
     end
 end
 
