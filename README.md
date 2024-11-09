@@ -1,6 +1,8 @@
 # AutoFForward
 A Farming Simulator 22 mod that automatically fast-forwards time when all users online agree.
 
+For other versions of Farming Simulator check other branches.
+
 ## Controls
 | Key | Description | Admin
 | --- | --- | ---
