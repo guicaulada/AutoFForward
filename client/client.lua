@@ -55,11 +55,6 @@ function AutoFForward:keyEvent(unicode, sym, modifier, isDown)
         return
     end
 
-    -- Easy way to check if we're in the placement screen or not
-    if g_currentMission.placementController.camera.isActive == true then
-        return
-    end
-
     if sym == Input.KEY_slash and not modAlt then
         g_client:getServerConnection():sendEvent(AFF_ToggleUserStateEvent.new())
     elseif sym == Input.KEY_slash and modAlt then
