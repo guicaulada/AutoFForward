@@ -1,0 +1,78 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up 7z
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y p7zip-full
+
+      - name: Get all branches matching FSXX pattern
+        id: get_branches
+        run: |
+          branches=$(git branch -r | grep -E 'origin/FS[0-9]{2}' | sed 's|origin/||' | uniq)
+          branches=$(echo "$branches" | tr '\n' ' ')  # Convert multiline to space-separated
+          echo "branches=$branches" >> $GITHUB_OUTPUT
+
+      - name: Zip each branch
+        run: |
+          mkdir -p zips
+          for branch in ${{ steps.get_branches.outputs.branches }}; do
+            git checkout $branch
+            zipname="${branch}_AutoFForward.zip"
+            7z a -x'!*.ps1' -x'!.git' -x'!LICENSE' -x'!*.zip' -x'!*.md' -x'!*.gitignore' "zips/$zipname" *
+          done
+
+      - name: Upload zips as workflow artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: branch-zips
+          path: zips/
+
+      - name: Check if release exists
+        id: check_release
+        run: |
+          if gh release view ${{ github.ref_name }} >/dev/null 2>&1; then
+            echo "release_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "release_exists=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Create release
+        if: steps.check_release.outputs.release_exists == 'false'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+
+      - name: Upload zips as a release asset
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          for zip in ./zips/*_AutoFForward.zip; do
+            echo "Uploading $zip"
+            gh release upload ${{ github.ref_name }} "$zip" --clobber
+          done
