@@ -24,12 +24,12 @@ local AFF_ToggleEnabledStateEvent_mt = Class(AFF_ToggleEnabledStateEvent, Event)
 
 InitEventClass(AFF_ToggleEnabledStateEvent, 'AFF_ToggleEnabledStateEvent')
 
-function AFF_ToggleEnabledStateEvent:emptyNew()
-    return Event:new(AFF_ToggleEnabledStateEvent_mt)
+function AFF_ToggleEnabledStateEvent.emptyNew()
+    return Event.new(AFF_ToggleEnabledStateEvent_mt)
 end
 
-function AFF_ToggleEnabledStateEvent:new()
-    return AFF_ToggleEnabledStateEvent:emptyNew()
+function AFF_ToggleEnabledStateEvent.new()
+    return AFF_ToggleEnabledStateEvent.emptyNew()
 end
 
 ---@param streamId number

@@ -16,15 +16,15 @@
 -- Defines client-side variables.
 local defaultFontSize = 0.014
 local defaultLineHeight = getTextHeight(defaultFontSize, '|')
-local defaultTextColor = {1, 1, 1, 1}
-local defaultTextShadowColor = {0, 0, 0, .5}
+local defaultTextColor = { 1, 1, 1, 1 }
+local defaultTextShadowColor = { 0, 0, 0, .5 }
 
 ----------------------------------------------------------------
 
 -- Request data from server
 
 AutoFForward.getDisplayState = function()
-    g_client:getServerConnection():sendEvent(AFF_GetDisplayStateEvent:new())
+    g_client:getServerConnection():sendEvent(AFF_GetDisplayStateEvent.new())
 end
 
 ----------------------------------------------------------------
@@ -37,7 +37,8 @@ function AutoFForward.loadDisplay()
         -- Client (MP)
         -- We can't send any events right now (will give error with invalid event id)
         -- so we send the request event after onStartMission()
-        g_currentMission.onStartMission = Utils.appendedFunction(g_currentMission.onStartMission, AutoFForward.getDisplayState)
+        g_currentMission.onStartMission = Utils.appendedFunction(g_currentMission.onStartMission,
+            AutoFForward.getDisplayState)
     end
 end
 
@@ -60,17 +61,17 @@ function AutoFForward:keyEvent(unicode, sym, modifier, isDown)
     end
 
     if sym == Input.KEY_slash and not modAlt then
-        g_client:getServerConnection():sendEvent(AFF_ToggleUserStateEvent:new())
+        g_client:getServerConnection():sendEvent(AFF_ToggleUserStateEvent.new())
     elseif sym == Input.KEY_slash and modAlt then
-        g_client:getServerConnection():sendEvent(AFF_ToggleEnabledStateEvent:new())
+        g_client:getServerConnection():sendEvent(AFF_ToggleEnabledStateEvent.new())
     elseif sym == Input.KEY_period and modShift then
-        g_client:getServerConnection():sendEvent(AFF_IncreaseFastSpeedEvent:new())
+        g_client:getServerConnection():sendEvent(AFF_IncreaseFastSpeedEvent.new())
     elseif sym == Input.KEY_period and modCtrl then
-        g_client:getServerConnection():sendEvent(AFF_IncreaseSlowSpeedEvent:new())
+        g_client:getServerConnection():sendEvent(AFF_IncreaseSlowSpeedEvent.new())
     elseif sym == Input.KEY_comma and modShift then
-        g_client:getServerConnection():sendEvent(AFF_DecreaseFastSpeedEvent:new())
+        g_client:getServerConnection():sendEvent(AFF_DecreaseFastSpeedEvent.new())
     elseif sym == Input.KEY_comma and modCtrl then
-        g_client:getServerConnection():sendEvent(AFF_DecreaseSlowSpeedEvent:new())
+        g_client:getServerConnection():sendEvent(AFF_DecreaseSlowSpeedEvent.new())
     end
 end
 
@@ -84,9 +85,10 @@ function renderTextWithShadow(x, y, text, textColor, shadowColor, align)
 
     local scale = g_gameSettings.uiScale
     setTextColor(unpack(shadowColor or defaultTextShadowColor))
-    renderText((x * scale) + (defaultLineHeight * 0.025) + ((1-scale)/100), (y * scale) - (defaultLineHeight * 0.025) + ((1-scale)/100), defaultFontSize * scale, text)
+    renderText((x * scale) + (defaultLineHeight * 0.025) + ((1 - scale) / 100),
+        (y * scale) - (defaultLineHeight * 0.025) + ((1 - scale) / 100), defaultFontSize * scale, text)
     setTextColor(unpack(textColor or defaultTextColor))
-    renderText((x * scale) + ((1-scale)/100), (y * scale) + ((1-scale)/100), defaultFontSize * scale, text)
+    renderText((x * scale) + ((1 - scale) / 100), (y * scale) + ((1 - scale) / 100), defaultFontSize * scale, text)
 end
 
 function YesOrNo(v)
@@ -97,7 +99,7 @@ end
 function AutoFForward:draw()
     if AutoFForward.enabled then
         y = .23
-        for k,v in pairs(AutoFForward.users) do
+        for k, v in pairs(AutoFForward.users) do
             renderTextWithShadow(.175, y, ('[%s] %s'):format(YesOrNo(v), k))
             y = y - .02
         end

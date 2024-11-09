@@ -24,16 +24,16 @@ local AFF_SetDisplayStateEvent_mt = Class(AFF_SetDisplayStateEvent, Event)
 
 InitEventClass(AFF_SetDisplayStateEvent, 'AFF_SetDisplayStateEvent')
 
-function AFF_SetDisplayStateEvent:emptyNew()
-    return Event:new(AFF_SetDisplayStateEvent_mt)
+function AFF_SetDisplayStateEvent.emptyNew()
+    return Event.new(AFF_SetDisplayStateEvent_mt)
 end
 
 ---@param enabled boolean
 ---@param fastSpeed boolean
 ---@param slowSpeed boolean
 ---@param users string
-function AFF_SetDisplayStateEvent:new(enabled, fastSpeed, slowSpeed, users)
-    local self = AFF_SetDisplayStateEvent:emptyNew()
+function AFF_SetDisplayStateEvent.new(enabled, fastSpeed, slowSpeed, users)
+    local self = AFF_SetDisplayStateEvent.emptyNew()
     self.enabled = enabled
     self.fastSpeed = fastSpeed
     self.slowSpeed = slowSpeed

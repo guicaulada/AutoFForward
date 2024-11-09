@@ -24,13 +24,13 @@ local AFF_SetFastSpeedEvent_mt = Class(AFF_SetFastSpeedEvent, Event)
 
 InitEventClass(AFF_SetFastSpeedEvent, 'AFF_SetFastSpeedEvent')
 
-function AFF_SetFastSpeedEvent:emptyNew()
-    return Event:new(AFF_SetFastSpeedEvent_mt)
+function AFF_SetFastSpeedEvent.emptyNew()
+    return Event.new(AFF_SetFastSpeedEvent_mt)
 end
 
 ---@param fastSpeed boolean
-function AFF_SetFastSpeedEvent:new(fastSpeed)
-    local self = AFF_SetFastSpeedEvent:emptyNew()
+function AFF_SetFastSpeedEvent.new(fastSpeed)
+    local self = AFF_SetFastSpeedEvent.emptyNew()
     self.fastSpeed = fastSpeed
     return self
 end

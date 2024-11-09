@@ -24,12 +24,12 @@ local AFF_DecreaseFastSpeedEvent_mt = Class(AFF_DecreaseFastSpeedEvent, Event)
 
 InitEventClass(AFF_DecreaseFastSpeedEvent, 'AFF_DecreaseFastSpeedEvent')
 
-function AFF_DecreaseFastSpeedEvent:emptyNew()
-    return Event:new(AFF_DecreaseFastSpeedEvent_mt)
+function AFF_DecreaseFastSpeedEvent.emptyNew()
+    return Event.new(AFF_DecreaseFastSpeedEvent_mt)
 end
 
-function AFF_DecreaseFastSpeedEvent:new()
-    return AFF_DecreaseFastSpeedEvent:emptyNew()
+function AFF_DecreaseFastSpeedEvent.new()
+    return AFF_DecreaseFastSpeedEvent.emptyNew()
 end
 
 ---@param streamId number

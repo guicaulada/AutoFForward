@@ -24,13 +24,13 @@ local AFF_SetUserStateEvent_mt = Class(AFF_SetUserStateEvent, Event)
 
 InitEventClass(AFF_SetUserStateEvent, 'AFF_SetUserStateEvent')
 
-function AFF_SetUserStateEvent:emptyNew()
-    return Event:new(AFF_SetUserStateEvent_mt)
+function AFF_SetUserStateEvent.emptyNew()
+    return Event.new(AFF_SetUserStateEvent_mt)
 end
 
 ---@param fastForward boolean
-function AFF_SetUserStateEvent:new(fastForward)
-    local self = AFF_SetUserStateEvent:emptyNew()
+function AFF_SetUserStateEvent.new(fastForward)
+    local self = AFF_SetUserStateEvent.emptyNew()
     self.fastForward = fastForward
     return self
 end

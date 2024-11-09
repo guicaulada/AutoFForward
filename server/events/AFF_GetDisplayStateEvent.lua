@@ -24,12 +24,12 @@ local AFF_GetDisplayStateEvent_mt = Class(AFF_GetDisplayStateEvent, Event)
 
 InitEventClass(AFF_GetDisplayStateEvent, 'AFF_GetDisplayStateEvent')
 
-function AFF_GetDisplayStateEvent:emptyNew()
-    return Event:new(AFF_GetDisplayStateEvent_mt)
+function AFF_GetDisplayStateEvent.emptyNew()
+    return Event.new(AFF_GetDisplayStateEvent_mt)
 end
 
-function AFF_GetDisplayStateEvent:new()
-    return AFF_GetDisplayStateEvent:emptyNew()
+function AFF_GetDisplayStateEvent.new()
+    return AFF_GetDisplayStateEvent.emptyNew()
 end
 
 ---@param streamId number

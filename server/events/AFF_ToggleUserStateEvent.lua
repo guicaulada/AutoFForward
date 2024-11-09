@@ -24,12 +24,12 @@ local AFF_ToggleUserStateEvent_mt = Class(AFF_ToggleUserStateEvent, Event)
 
 InitEventClass(AFF_ToggleUserStateEvent, 'AFF_ToggleUserStateEvent')
 
-function AFF_ToggleUserStateEvent:emptyNew()
-    return Event:new(AFF_ToggleUserStateEvent_mt)
+function AFF_ToggleUserStateEvent.emptyNew()
+    return Event.new(AFF_ToggleUserStateEvent_mt)
 end
 
-function AFF_ToggleUserStateEvent:new()
-    return AFF_ToggleUserStateEvent:emptyNew()
+function AFF_ToggleUserStateEvent.new()
+    return AFF_ToggleUserStateEvent.emptyNew()
 end
 
 ---@param streamId number

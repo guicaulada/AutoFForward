@@ -24,13 +24,13 @@ local AFF_SetEnabledStateEvent_mt = Class(AFF_SetEnabledStateEvent, Event)
 
 InitEventClass(AFF_SetEnabledStateEvent, 'AFF_SetEnabledStateEvent')
 
-function AFF_SetEnabledStateEvent:emptyNew()
-    return Event:new(AFF_SetEnabledStateEvent_mt)
+function AFF_SetEnabledStateEvent.emptyNew()
+    return Event.new(AFF_SetEnabledStateEvent_mt)
 end
 
 ---@param enabled boolean
-function AFF_SetEnabledStateEvent:new(enabled)
-    local self = AFF_SetEnabledStateEvent:emptyNew()
+function AFF_SetEnabledStateEvent.new(enabled)
+    local self = AFF_SetEnabledStateEvent.emptyNew()
     self.enabled = enabled
     return self
 end

@@ -16,27 +16,28 @@
 -- Broadcast state to all clients
 
 AutoFForward.broadcastEnabledState = function()
-    local event = AFF_SetEnabledStateEvent:new(AutoFForward.enabled)
+    local event = AFF_SetEnabledStateEvent.new(AutoFForward.enabled)
     g_server:broadcastEvent(event, true)
 end
 
 AutoFForward.broadcastUserList = function()
-    local event = AFF_SetUserListEvent:new(json.stringify(AutoFForward.users))
+    local event = AFF_SetUserListEvent.new(json.stringify(AutoFForward.users))
     g_server:broadcastEvent(event, true)
 end
 
 AutoFForward.broadcastFastSpeed = function()
-    local event = AFF_SetFastSpeedEvent:new(AutoFForward.fastSpeed)
+    local event = AFF_SetFastSpeedEvent.new(AutoFForward.fastSpeed)
     g_server:broadcastEvent(event, true)
 end
 
 AutoFForward.broadcastSlowSpeed = function()
-    local event = AFF_SetSlowSpeedEvent:new(AutoFForward.slowSpeed)
+    local event = AFF_SetSlowSpeedEvent.new(AutoFForward.slowSpeed)
     g_server:broadcastEvent(event, true)
 end
 
 AutoFForward.broadcastDisplayState = function()
-    local event = AFF_SetDisplayStateEvent:new(AutoFForward.enabled, AutoFForward.fastSpeed, AutoFForward.slowSpeed, json.stringify(AutoFForward.users))
+    local event = AFF_SetDisplayStateEvent.new(AutoFForward.enabled, AutoFForward.fastSpeed, AutoFForward.slowSpeed,
+        json.stringify(AutoFForward.users))
     g_server:broadcastEvent(event)
 end
 
@@ -46,37 +47,38 @@ end
 
 ---@param connection Connection
 AutoFForward.setUserState = function(user)
-    local event = AFF_SetUserStateEvent:new(AutoFForward.users[user:getNickname()])
+    local event = AFF_SetUserStateEvent.new(AutoFForward.users[user:getNickname()])
     user:getConnection():sendEvent(event)
 end
 
 ---@param connection Connection
 AutoFForward.setEnabledState = function(connection)
-    local event = AFF_SetEnabledStateEvent:new(AutoFForward.enabled)
+    local event = AFF_SetEnabledStateEvent.new(AutoFForward.enabled)
     connection:sendEvent(event)
 end
 
 ---@param connection Connection
 AutoFForward.setUserList = function(connection)
-    local event = AFF_SetUserListEvent:new(json.stringify(AutoFForward.users))
+    local event = AFF_SetUserListEvent.new(json.stringify(AutoFForward.users))
     connection:sendEvent(event)
 end
 
 ---@param connection Connection
 AutoFForward.setFastSpeed = function(connection)
-    local event = AFF_SetFastSpeedEvent:new(AutoFForward.fastSpeed)
+    local event = AFF_SetFastSpeedEvent.new(AutoFForward.fastSpeed)
     connection:sendEvent(event)
 end
 
 ---@param connection Connection
 AutoFForward.setSlowSpeed = function(connection)
-    local event = AFF_SetSlowSpeedEvent:new(AutoFForward.slowSpeed)
+    local event = AFF_SetSlowSpeedEvent.new(AutoFForward.slowSpeed)
     connection:sendEvent(event)
 end
 
 ---@param connection Connection
 AutoFForward.setDisplayState = function(connection)
-    local event = AFF_SetDisplayStateEvent:new(AutoFForward.enabled, AutoFForward.fastSpeed, AutoFForward.slowSpeed, json.stringify(AutoFForward.users))
+    local event = AFF_SetDisplayStateEvent.new(AutoFForward.enabled, AutoFForward.fastSpeed, AutoFForward.slowSpeed,
+        json.stringify(AutoFForward.users))
     connection:sendEvent(event)
 end
 
@@ -92,11 +94,13 @@ function AutoFForward:loadMap()
         -- Load settings if found
         pcall(AutoFForward.loadFromXml)
         -- Append to onSaveComplete to save our own XML settings
-        SavegameController.onSaveComplete = Utils.appendedFunction(SavegameController.onSaveComplete, AutoFForward.saveState)
+        SavegameController.onSaveComplete = Utils.appendedFunction(SavegameController.onSaveComplete,
+            AutoFForward.saveState)
         -- Handles when users join or leave
         UserManager.addUser = Utils.appendedFunction(UserManager.addUser, AutoFForward.updateUsers)
         UserManager.removeUser = Utils.appendedFunction(UserManager.removeUser, AutoFForward.updateUsers)
-        UserManager.removeUserByConnection = Utils.appendedFunction(UserManager.removeUserByConnection, AutoFForward.updateUsers)
+        UserManager.removeUserByConnection = Utils.appendedFunction(UserManager.removeUserByConnection,
+            AutoFForward.updateUsers)
         UserManager.removeUserById = Utils.appendedFunction(UserManager.removeUserById, AutoFForward.updateUsers)
     end
 end
@@ -105,7 +109,7 @@ end
 function AutoFForward.updateUsers()
     local users = {}
     local serverUsers = g_currentMission.userManager:getUsers()
-    for _,user in pairs(serverUsers) do
+    for _, user in pairs(serverUsers) do
         local nickname = user:getNickname()
         if nickname ~= 'Server' then
             if AutoFForward.users[nickname] == nil then
@@ -123,7 +127,7 @@ end
 function AutoFForward.updateTimeScale()
     fastForward = false
     if AutoFForward.enabled then
-        for _,v in pairs(AutoFForward.users) do
+        for _, v in pairs(AutoFForward.users) do
             fastForward = v
             if not fastForward then
                 break

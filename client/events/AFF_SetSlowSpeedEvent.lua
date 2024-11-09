@@ -24,13 +24,13 @@ local AFF_SetSlowSpeedEvent_mt = Class(AFF_SetSlowSpeedEvent, Event)
 
 InitEventClass(AFF_SetSlowSpeedEvent, 'AFF_SetSlowSpeedEvent')
 
-function AFF_SetSlowSpeedEvent:emptyNew()
-    return Event:new(AFF_SetSlowSpeedEvent_mt)
+function AFF_SetSlowSpeedEvent.emptyNew()
+    return Event.new(AFF_SetSlowSpeedEvent_mt)
 end
 
 ---@param slowSpeed boolean
-function AFF_SetSlowSpeedEvent:new(slowSpeed)
-    local self = AFF_SetSlowSpeedEvent:emptyNew()
+function AFF_SetSlowSpeedEvent.new(slowSpeed)
+    local self = AFF_SetSlowSpeedEvent.emptyNew()
     self.slowSpeed = slowSpeed
     return self
 end

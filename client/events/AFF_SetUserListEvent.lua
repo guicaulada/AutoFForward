@@ -24,13 +24,13 @@ local AFF_SetUserListEvent_mt = Class(AFF_SetUserListEvent, Event)
 
 InitEventClass(AFF_SetUserListEvent, 'AFF_SetUserListEvent')
 
-function AFF_SetUserListEvent:emptyNew()
-    return Event:new(AFF_SetUserListEvent_mt)
+function AFF_SetUserListEvent.emptyNew()
+    return Event.new(AFF_SetUserListEvent_mt)
 end
 
 ---@param users string
-function AFF_SetUserListEvent:new(users)
-    local self = AFF_SetUserListEvent:emptyNew()
+function AFF_SetUserListEvent.new(users)
+    local self = AFF_SetUserListEvent.emptyNew()
     self.users = users
     return self
 end
